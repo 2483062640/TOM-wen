@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student system 3.0</title>
+    <style>
+		* {
+		    margin: 0;
+		    padding: 0;
+		}
+		
+		header, .main, .main_informationDisplay>div {
+		    padding: 20px;
+		}
+		
+		header {
+		    background-color: rgb(53, 138, 136);
+		    color: #fff;
+		    letter-spacing: 5px;
+		}
+		
+		.main {
+		    display: flex;
+		}
+		
+		.main_menu:hover {
+		    cursor: pointer;
+		}
+		
+		.main_informationDisplay {
+		    display: flex;
+		    flex-grow: 1;
+		    margin-left: 20px;
+		}
+		
+		.main_informationDisplay>div {
+		    flex-grow: 1;
+		    border-width: 2px;
+		    border-style: solid;
+		    border-color: transparent;
+		}
+		
+		table, th, td {
+		    border: 1px solid #ccc;
+		}
+		
+		table {
+		    width: 100%;
+		}
+		
+		.studentsList>caption {
+		    font: 1.17em bolder;
+		}
+		
+		
+		/* h2 样式 */
+		
+		.main_menu {
+		    padding: 10px 20px;
+		    background-color: rgb(32, 82, 80);
+		    margin-bottom: 4px;
+		    color: rgb(53, 138, 136);
+		}
+		
+		
+		/* 效果 */
+		
+		.menu_checked {
+		    background-color: rgb(53, 138, 136);
+		    color: #fff;
+		}
+		
+		.main_informationDisplay_checked {
+		    border-color: #006363 !important;
+		}
+	</style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>教师信息管理系统</h1>
+        </header>
+        <div class="main">
+            <section>
+                <h2 class="main_menu menu_checked">教师列表</h2>
+                <h2 class="main_menu">新增教师</h2>
+                <h2 class="main_menu">修改教师</h2>
+                <h2 class="main_menu">查询教师</h2>
+            </section>
+            <div class="main_informationDisplay">
+                <div class="main_informationDisplay_checked">
+                    <table class="studentsList">
+                        <caption>教师列表</caption>
+                        <thead>
+                            <tr>
+                                <th>工号</th>
+                                <th>姓名</th>
+                                <th>工资</th>
+                                <th>职称</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <span id="tips"></span>
+                </div>
+                <div>
+                    <h3>新增教师</h3>
+                    <form action="#" id="addForm">
+                        <div>
+                            <label for="addname">姓名</label>
+                            <input type="text" id="addname" class="name">
+                        </div>
+                        <div>
+                            <label for="addage">工资</label>
+                            <input type="text" id="addage" class="age">
+                        </div>
+                        <div>
+                            <span>职称</span>
+                            <label for="addmale">教授</label>
+                            <input type="radio" name="gender" id="addmale" value="教授">
+                            <label for="addfemale">副教授</label>
+                            <input type="radio" name="gender" id="addfemale" value="副教授">
+                        </div>
+                        <input type="button" value="确认新增" id="addBtn">
+                    </form>
+                </div>
+                <div>
+                    <h3>修改教师</h3>
+                    <form action="#" id="modifyForm">
+                        <div>
+                            <label for="modifyname">姓名</label>
+                            <input type="text" id="modifyname" class="name">
+                        </div>
+                        <div>
+                            <label for="modifyage">工资</label>
+                            <input type="text" id="modifyage" class="age">
+                        </div>
+                        <div>
+                            <span>职称</span>
+                            <label for="modifymale">教授</label>
+                            <input type="radio" name="gender" id="modifymale" value="教授">
+                            <label for="modifyfemale">副教授</label>
+                            <input type="radio" name="gender" id="modifyfemale" value="副教授">
+                        </div>
+                        <input type="button" value="确认修改" id="modifyBtn" disabled>
+                    </form>
+                </div>
+                <div>
+                    <h3>查询教师</h3>
+                    <form action="#" id="queryForm">
+                        <select name="" id="">
+                            <option value="name">姓名</option>
+                            <option value="age">工资</option>
+                            <option value="gender">职称</option>
+                        </select>
+                        <input type="text" placeholder="查询内容">
+                        <input type="button" value="搜索" id="queryBtn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   <script>
+	   let studentsData = [
+	       { id: 1, name: '张三', age: '7000', gender: '副教授' },
+	       { id: 2, name: '李四', age: '8790', gender: '副教授' },
+	       { id: 3, name: '王五', age: '11340', gender: '教授' },
+	       { id: 4, name: '易烊千玺', age: '13354', gender: '教授' },
+	       { id: 5, name: '赵丽颖', age: '8876', gender: '副教授' },
+	       { id: 6, name: '杜鹃', age: '8848', gender: '副教授' },
+	       { id: 7, name: '爱因斯贪', age: '13400', gender: '教授' },
+	       { id: 8, name: '王菲', age: '7890', gender: '副教授' },
+	       { id: 9, name: '邓超', age: '12345', gender: '教授' },
+	       { id: 10, name: '刘诗诗', age: '11111', gender: '教授' }
+	   ];
+	   let lastId = studentsData[studentsData.length - 1].id;
+	   
+	   // ------------ 右侧 div 点击、input 点击 添加效果
+	   let main_info_arr = document.querySelectorAll(".main_informationDisplay>div");  // 所有 div
+	   let h2_arr = document.querySelectorAll(".main>section>h2"); // 所有 h2
+	   
+	   main_info_arr.forEach((item, index) => {
+	       item.onclick = function () {
+	           main_info_arr.forEach(item => item.classList.remove("main_informationDisplay_checked"));    // 去掉所有 div 框
+	           item.classList.add("main_informationDisplay_checked"); // 某一个 div 添加边框
+	           h2_arr.forEach(item => item.classList.remove("menu_checked"));// 去掉所有 h2 样式
+	           h2_arr[index].classList.add("menu_checked");
+	       }
+	   });
+	   // ------ h2 点击改变样式
+	   h2_arr.forEach((item, index) => {
+	       item.addEventListener("click", () => {
+	           h2_arr.forEach(item => item.classList.remove("menu_checked"));
+	           item.classList.add("menu_checked");
+	           main_info_arr.forEach(item => item.classList.remove("main_informationDisplay_checked"));
+	           main_info_arr[index].classList.add("main_informationDisplay_checked");
+	       });
+	   });
+	   
+	   // --------------- 渲染学生数据
+	   let tbody = document.querySelector(".studentsList>tbody");
+	   function render(arr = studentsData) {
+	       tbody.innerHTML = arr.map(item =>
+	           `<tr>
+	               <td>${item.id}</td>
+	               <td>${item.name}</td>
+	               <td>${item.age}</td>
+	               <td>${item.gender}</td>
+	               <td>
+	                   <input type="button" value="修改" data-func="modify" data-index='${item.id}'>
+	                   <input type="button" value="删除" data-func="delete" data-index='${item.id}'>
+	               </td>
+	           </tr>`
+	       ).join("");
+	   }
+	   render();
+	   
+	   // ------ 公用元素
+	   let name, age, gender;
+	   let tips = document.getElementById("tips");
+	   
+	   // -------------- 新增教师
+	   let add_btn = document.getElementById("addBtn");
+	   add_btn.onclick = function () {
+	       name = document.querySelector("#addForm .name");
+	       age = document.querySelector("#addForm .age");
+	       gender = document.getElementById("addForm").gender.value;
+	       if (name.value && age.value) {
+	           studentsData.push({ id: lastId + 1, name: name.value, age: age.value, gender: gender ? gender : "男" });
+	           lastId++;
+	           render();
+	       }
+	       name.value = "";
+	       age.value = "";
+	   }
+	   // -------------- 修改学生 从表格里点击 修改
+	   let modify_btn = document.getElementById("modifyBtn");  // 右侧 确认修改 按钮
+	   let student;
+	   tbody.onclick = function (event) {
+	       if (event.target.nodeName == "INPUT") {
+	           if (event.target.dataset.func == "modify") {    // 点击修改
+	               modify_btn.disabled = false;
+	               name = document.querySelector("#modifyForm .name");
+	               age = document.querySelector("#modifyForm .age");
+	               gender_Arr = document.querySelectorAll("#modifyForm [type='radio']");
+	               [student] = studentsData.filter(item => item.id == event.target.dataset.index); // 获得需要修改的学生对象
+	               name.value = student.name;
+	               age.value = student.age;
+	               student.gender == "教授" ? gender_Arr[0].checked = true : gender_Arr[1].checked = true;
+	           } else if (event.target.dataset.func == "delete") {  // 点击删除
+	               studentsData.forEach((item, index) => {
+	                   if (item.id == event.target.dataset.index) {
+	                       let result = confirm("是否删除：" + item.name + "?");
+	                       result ? studentsData.splice(index, 1) : "";
+	                   }
+	               });
+	               render();
+	           }
+	       }
+	   }
+	   // ----------  点击修改学生
+	   modify_btn.onclick = function () {
+	       name = document.querySelector("#modifyForm .name").value;
+	       age = document.querySelector("#modifyForm .age").value;
+	       gender = document.getElementById("modifyForm").gender.value;
+	   
+	       for (let i = 0; i < studentsData.length; i++) {
+	           if (studentsData[i].id == student.id) {
+	               studentsData.splice(i, 1, { id: student.id, name, age, gender });
+	               break;
+	           }
+	       }
+	       render();
+	   }
+	   
+	   // -------- 查询学生
+	   let query_btn = document.getElementById("queryBtn");
+	   query_btn.onclick = function () {
+	       let type = document.querySelector("#queryForm>select").value;
+	       let content = document.querySelector("#queryForm [type='text']").value;
+	       let arr;
+	       if (content) {
+	           arr = studentsData.filter(item => item[type] == content);
+	       }
+	       arr.length ? tips.innerText = "" : tips.innerText = "无数据";
+	       render(arr);
+	   }
+	   
+	   // ---------- 点击左侧 学生列表 刷新显示区域
+	   let student_list = document.querySelector(".main>section>h2:first-child");
+	   student_list.addEventListener("click", () => {
+	       render();
+	       tips.innerText = "";
+	   })
+   </script>
+</body>
+
+</html>
